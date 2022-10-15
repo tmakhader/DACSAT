@@ -4,12 +4,12 @@ import os
 import sys
 
 def verify_keys(circuit_name):
-    oracle_bench_file = "./tmp/oracle_subcircuits/circuit_trace_extract_" + circuit_name
+    keyimposed_bench_file = "./tmp/keyimposed_subcircuits/circuit_trace_extract_" + circuit_name
     obfuscated_bench_file = "./tmp/netlist_subcircuits/circuit_trace_extract_" + circuit_name
     key_file_name = "./key_files/temp_keys.txt"
     global_key_file_name = "./key_files/final_keys.txt"
-    oracle_output = parse_outputs(oracle_bench_file)[0]
-    oracle_inputs = parse_inputs(oracle_bench_file)
+    keyimposed_output = parse_outputs(keyimposed_bench_file)[0]
+    keyimposed_inputs = parse_inputs(keyimposed_bench_file)
     key_inputs = parse_keys(obfuscated_bench_file)
     
     key_vector_map = {}
@@ -40,7 +40,7 @@ def verify_keys(circuit_name):
                 key_string += "1"
             else:
                 key_string += "0"       
-        shell_code = "./attack_tool/bin/neos -q " + oracle_bench_file + " " + obfuscated_bench_file +  " key=" + key_string + " > ./intermediate_scripts/shell_out.txt"
+        shell_code = "./attack_tool/bin/neos -q " + keyimposed_bench_file + " " + obfuscated_bench_file +  " key=" + key_string + " > ./intermediate_scripts/shell_out.txt"
         os.system(shell_code)
         shell_out = open("./intermediate_scripts/shell_out.txt", "r")
         legitimacy_flag = False
